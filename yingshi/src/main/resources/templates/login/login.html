@@ -10,7 +10,7 @@
 
     <title>用户管理系统</title>
 
-    <link rel="stylesheet"  type="text/css"  href="assets/css/fonts/linecons/css/linecons.css">
+    <link rel="stylesheet"  type="text/css"  href="/assets/css/fonts/linecons/css/linecons.css">
     <link rel="stylesheet"   type="text/css"  href="/assets/css/fonts/fontawesome/css/font-awesome.min.css">
     <link rel="stylesheet"   type="text/css"  href="/assets/css/bootstrap.css">
     <link rel="stylesheet"  type="text/css"  href="/assets/css/xenon-core.css">
@@ -92,19 +92,20 @@
                             };
 
                             $.ajax({
-                                url: "{:url('login/login/veify')}",
+                                url: "login",
                                 method: 'POST',
-                                dataType: 'json',
+
+                                //dataType: 'json',
                                 data: {
-                                    do_login: true,
+                                   // do_login: true,
                                     username: $(form).find('#username').val(),
                                     passwd: $(form).find('#passwd').val(),
                                 },
                                 success: function(resp)
                                 {
-                                    if(resp.code=='1')
+                                    if(resp.code == 1)
                                     {
-                                        window.location='{:url("index/index/index")}';
+                                        window.location='/admin/index';
                                     }else{
                                         $('#alert').html('<span style="color: red">账号密码错误或被封停!请重新登陆!或联系管理员!</span>')
                                     }
@@ -143,8 +144,8 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-dark  btn-block text-left">
-                        <i class="fa-lock"></i>
+                    <button type="submit" class="btn  btn-block ">
+
                      登陆
                     </button>
                 </div>
