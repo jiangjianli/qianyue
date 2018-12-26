@@ -1,11 +1,14 @@
 package com.jiang.controller;
 
+import com.jiang.pojo.LoginParamVo;
 import com.jiang.pojo.User;
 import com.jiang.service.UserService;
 import com.jiang.util.JsonResult;
+import com.jiang.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,33 +29,50 @@ public class LoginController {
 
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+
+
+
+
+
+    @RequestMapping(value = "/api/login",method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult login(@RequestParam("username") String username, @RequestParam("passwd") String password, HttpSession session)
+    public JsonResult login(@RequestBody LoginParamVo model)
     {
-        System.out.println("login post " +username +password);
+        System.out.println("login post " +model.getUsername() +model.getPassword());
 
-        User user = this.service.findUserByUserNameAndPassword(username,password);
-
-//        JsonResult json = new JsonResult();
-//
-//        return json;
-
-        if (user == null)
+        if (StringUtils.isEmpty(model.getUsername()) || StringUtils.isEmpty(model.getPassword()))
         {
-            JsonResult json = JsonResult.error("用户名或密码错误");
-            return json;
-        }else
-        {
-            session.setAttribute("user",user.getId());
-            return JsonResult.success("登录成功",user);
+
+            return JsonResult.error("请输入用户名或者密码");
         }
 
 
 
 
+        User user = this.service.findUserByUserNameAndPassword(model.getUsername(),model.getPassword());
+
+
+        if (user == null)
+        {
+            JsonResult json = JsonResult.error("用户名或密码错误");
+
+            return json;
+        }else
+        {
+           // session.setAttribute("user",user.getId());
+            String token = TokenUtil.getToken();
+            user.setToken(token);
+
+            this.service.saveUser(user);
+
+            return JsonResult.success("登录成功",user.getToken());
+        }
+
 
     }
+
+
+
 
 
 

@@ -17,5 +17,16 @@ public class AdminController {
         return "ui-navbars";
     }
 
+    @RequestMapping("/home")
+    public String home()
+    {
+        System.out.println("home");
+        return "admin/index";
+    }
+
+
+
+
+
 
 }

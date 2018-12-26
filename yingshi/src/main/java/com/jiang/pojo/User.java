@@ -24,6 +24,8 @@ public class User {
 
     private String userName;
 
+    private String token;
+
     private String password;
 
     private String nickname;

@@ -42,7 +42,7 @@ public class JsonResult<T> {
 
     private Integer code;
 
-    private String msg;
+    private String message;
 
     public Integer getCode() {
         return code;
@@ -63,13 +63,13 @@ public class JsonResult<T> {
     public  JsonResult(Integer code,String msg)
     {
         this.code = code;
-        this.msg = msg;
+        this.message = msg;
     }
 
     public  JsonResult(Integer code,String msg,T data)
     {
         this.code = code;
-        this.msg = msg;
+        this.message = msg;
         this.data = data;
     }
 
@@ -114,14 +114,19 @@ public class JsonResult<T> {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
+    public T getData() {
+        return data;
+    }
 
-
+    public void setData(T data) {
+        this.data = data;
+    }
 }
